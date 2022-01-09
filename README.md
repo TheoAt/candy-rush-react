@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Recreating Candy Crush in React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was inspired by this video from 'Code with Ania Kubow' channel : https://www.youtube.com/watch?v=PBrEq9Wd6_U&ab_channel=CodewithAniaKub%C3%B3w
 
 ## Available Scripts
 
