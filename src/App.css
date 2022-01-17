@@ -1,5 +1,53 @@
+:root {
+    --main-color: #0e0b2b;
+    --secondary-color: #b2a187;
+    --dark-color: #080823;
+    --light-color: #F8F8F8;
+    --spacing: 8px;
+    --spacing-medium: calc(var(--spacing) * 2);
+    --spacing-large: calc(var(--spacing)* 4);
+    --game-board-size: 560px;
+    --game-img-size: 70px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 .App {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #263d87;
+    display: flex;
+    padding: var(--spacing-large);
+}
+
+.game_container {
+    width: var(--game-board-size);
+    height: var(--game-board-size);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.game_container img {
+    width: var(--game-img-size);
+    height: var(--game-img-size);
+}
+
+@keyframes falseMoveAnimation {
+    0%{
+        transform: rotate(0);
+    }
+    30%{
+        transform: rotate(20deg);
+    }
+    60%{
+        transform: rotate(-20deg);
+    }
+    90%{
+        transform: rotate(0);
+    }
 }
