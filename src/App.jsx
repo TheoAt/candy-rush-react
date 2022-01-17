@@ -12,7 +12,7 @@ export default function App() {
       const columnFour = [i, i + baseWidth, i + baseWidth * 2, i + baseWidth * 3]
       const currentColorCase = currentColorBoard[i]
     
-      if(columnFour.every(square => currentColorBoard[square] === currentColorCase)){
+      if(columnFour.every(square => currentColorBoard[square] === currentColorCase)) {
         columnFour.forEach(square => currentColorBoard[square] = '')
       }
     }
@@ -26,7 +26,7 @@ export default function App() {
 
       if(notValideCase.includes(i)) continue
 
-      if(rowFour.every(square => currentColorBoard[square] === currentColorCase)){
+      if(rowFour.every(square => currentColorBoard[square] === currentColorCase)) {
         rowFour.forEach(square => currentColorBoard[square] = '')
       }
     }
@@ -37,7 +37,7 @@ export default function App() {
       const columnThree = [i, i + baseWidth, i + baseWidth * 2]
       const currentColorCase = currentColorBoard[i]
     
-      if(columnThree.every(square => currentColorBoard[square] === currentColorCase)){
+      if(columnThree.every(square => currentColorBoard[square] === currentColorCase)) {
         columnThree.forEach(square => currentColorBoard[square] = '')
       }
     }
@@ -51,8 +51,23 @@ export default function App() {
 
       if(notValideCase.includes(i)) continue
 
-      if(rowThree.every(square => currentColorBoard[square] === currentColorCase)){
+      if(rowThree.every(square => currentColorBoard[square] === currentColorCase)) {
         rowThree.forEach(square => currentColorBoard[square] = '')
+      }
+    }
+  }
+
+  const moveDownSquare = () => {
+    for(let i = 0; i < 64 - baseWidth; i++) {
+      const firstRow = [0, 1, 2, 3, 4, 5, 6, 7]
+      const isFirstRow = firstRow.includes(i)
+
+      if(isFirstRow && currentColorBoard[i] === '')
+        currentColorBoard[i] = candyColors[Math.floor(Math.random() * candyColors.length)]
+
+      if(currentColorBoard[i + baseWidth] === '') {
+        currentColorBoard[i + baseWidth] = currentColorBoard[i]
+        currentColorBoard[i] = ''
       }
     }
   }
@@ -76,10 +91,11 @@ export default function App() {
       checkRowFour()
       checkColumnThree()
       checkRowThree()
+      moveDownSquare()
       setCurrentColorBoard([...currentColorBoard])
-    }, 100)
+    }, 200)
     return () => clearInterval(timer)
-  }, [checkColumnFour, checkRowFour, checkColumnThree, checkRowThree, currentColorBoard])
+  }, [checkColumnFour, checkRowFour, checkColumnThree, checkRowThree, moveDownSquare, currentColorBoard])
 
   return (
     <div className="App">
