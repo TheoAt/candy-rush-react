@@ -5,15 +5,20 @@ const baseWidth = 8
 const candyColors = ['blue', 'red', 'green', 'orange', 'purple', 'yellow']
 
 export default function App() {
+  //USE STATE DEFINITIONS
   const [currentColorBoard, setCurrentColorBoard] = useState([])
+  const [squareDragged, setSquareDragged] = useState(null)
+  const [squareReplaced, setSquareReplaced] = useState(null)
 
+  //CHECK CANDIES FUNCTIONS
   const checkColumnFour = () => {
-    for(let i = 0; i < 39; i++) {
+    for(let i = 0; i <= 39; i++) {
       const columnFour = [i, i + baseWidth, i + baseWidth * 2, i + baseWidth * 3]
       const currentColorCase = currentColorBoard[i]
     
       if(columnFour.every(square => currentColorBoard[square] === currentColorCase)) {
         columnFour.forEach(square => currentColorBoard[square] = '')
+        return true
       }
     }
   }
@@ -28,17 +33,19 @@ export default function App() {
 
       if(rowFour.every(square => currentColorBoard[square] === currentColorCase)) {
         rowFour.forEach(square => currentColorBoard[square] = '')
+        return true
       }
     }
   }
 
   const checkColumnThree = () => {
-    for(let i = 0; i < 47; i++) {
+    for(let i = 0; i <= 47; i++) {
       const columnThree = [i, i + baseWidth, i + baseWidth * 2]
       const currentColorCase = currentColorBoard[i]
     
       if(columnThree.every(square => currentColorBoard[square] === currentColorCase)) {
         columnThree.forEach(square => currentColorBoard[square] = '')
+        return true
       }
     }
   }
@@ -53,12 +60,14 @@ export default function App() {
 
       if(rowThree.every(square => currentColorBoard[square] === currentColorCase)) {
         rowThree.forEach(square => currentColorBoard[square] = '')
+        return true
       }
     }
   }
 
+  // MOVE CANDIES FUNCTION
   const moveDownSquare = () => {
-    for(let i = 0; i < 64 - baseWidth; i++) {
+    for(let i = 0; i <= 55; i++) {
       const firstRow = [0, 1, 2, 3, 4, 5, 6, 7]
       const isFirstRow = firstRow.includes(i)
 
@@ -72,6 +81,41 @@ export default function App() {
     }
   }
 
+  //DRAG FUNCTIONS
+  const dragStart = (e) => {
+    setSquareDragged(e.target)
+  }
+
+  const dragDrop = (e) => {
+      setSquareReplaced(e.target)
+  }
+
+  const dragEnd = () => {
+    const squareDraggedId = parseInt(squareDragged.getAttribute('data-id'))
+    const squareReplacedId = parseInt(squareReplaced.getAttribute('data-id'))
+
+    currentColorBoard[squareReplacedId] = squareDragged.style.backgroundColor
+    currentColorBoard[squareDraggedId] = squareReplaced.style.backgroundColor
+
+    const validMoves = [squareDraggedId - 1, squareDraggedId - baseWidth, squareDraggedId + 1, squareDraggedId + baseWidth]
+    const validMove = validMoves.includes(squareReplacedId)
+    
+    const isColumnFour = checkColumnFour()
+    const isRowFour = checkRowFour()
+    const isColumnThree = checkColumnThree()
+    const isRowThree = checkRowThree()
+
+    if(squareReplacedId && validMove && (isColumnFour || isRowFour || isColumnThree || isRowThree)) {
+      setSquareDragged(null)
+      setSquareReplaced(null)
+    } else {
+      currentColorBoard[squareReplacedId] = squareReplaced.style.backgroundColor
+      currentColorBoard[squareDraggedId] = squareDragged.style.backgroundColor
+      setCurrentColorBoard([...currentColorBoard])
+    }
+  }
+
+  //CREATE BOARD GAME FUNCTION
   const createBoard = () =>  {
     const colorsTab = []
     for(let i = 0; i < baseWidth * baseWidth; i++) {
@@ -101,7 +145,19 @@ export default function App() {
     <div className="App">
       <div className="game_container">
         {currentColorBoard.map((candyColor, index) => (
-          <img style={{backgroundColor: candyColor}} alt={candyColor+'_fruit'} key={index} />
+          <img 
+            style={{backgroundColor: candyColor}} 
+            alt={candyColor+'_fruit'} 
+            key={index} 
+            data-id={index} 
+            draggable={true}
+            onDragStart={dragStart}
+            onDragOver={(e) => e.preventDefault()}
+            onDragEnter={(e) => e.preventDefault()}
+            onDragLeave={(e) => e.preventDefault()}
+            onDrop={dragDrop}
+            onDragEnd={dragEnd}
+          />
         ))}
       </div>
     </div>
