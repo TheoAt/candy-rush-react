@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
+//IMPORT CANDIES IMAGES
+import blueCandy from './images/blue-candy.png'
+import greenCandy from './images/green-candy.png'
+import orangeCandy from './images/orange-candy.png'
+import purpleCandy from './images/purple-candy.png'
+import redCandy from './images/red-candy.png'
+import yellowCandy from './images/yellow-candy.png'
+import blank from './images/blank.png'
+
 const baseWidth = 8
-const candyColors = ['blue', 'red', 'green', 'orange', 'purple', 'yellow']
+const candyColors = [blueCandy, greenCandy, orangeCandy, purpleCandy, redCandy, yellowCandy]
 
 export default function App() {
   //USE STATE DEFINITIONS
@@ -17,7 +26,7 @@ export default function App() {
       const currentColorCase = currentColorBoard[i]
     
       if(columnFour.every(square => currentColorBoard[square] === currentColorCase)) {
-        columnFour.forEach(square => currentColorBoard[square] = '')
+        columnFour.forEach(square => currentColorBoard[square] = blank)
         return true
       }
     }
@@ -32,7 +41,7 @@ export default function App() {
       if(notValideCase.includes(i)) continue
 
       if(rowFour.every(square => currentColorBoard[square] === currentColorCase)) {
-        rowFour.forEach(square => currentColorBoard[square] = '')
+        rowFour.forEach(square => currentColorBoard[square] = blank)
         return true
       }
     }
@@ -44,7 +53,7 @@ export default function App() {
       const currentColorCase = currentColorBoard[i]
     
       if(columnThree.every(square => currentColorBoard[square] === currentColorCase)) {
-        columnThree.forEach(square => currentColorBoard[square] = '')
+        columnThree.forEach(square => currentColorBoard[square] = blank)
         return true
       }
     }
@@ -59,7 +68,7 @@ export default function App() {
       if(notValideCase.includes(i)) continue
 
       if(rowThree.every(square => currentColorBoard[square] === currentColorCase)) {
-        rowThree.forEach(square => currentColorBoard[square] = '')
+        rowThree.forEach(square => currentColorBoard[square] = blank)
         return true
       }
     }
@@ -71,12 +80,12 @@ export default function App() {
       const firstRow = [0, 1, 2, 3, 4, 5, 6, 7]
       const isFirstRow = firstRow.includes(i)
 
-      if(isFirstRow && currentColorBoard[i] === '')
+      if(isFirstRow && currentColorBoard[i] === blank)
         currentColorBoard[i] = candyColors[Math.floor(Math.random() * candyColors.length)]
 
-      if(currentColorBoard[i + baseWidth] === '') {
+      if(currentColorBoard[i + baseWidth] === blank) {
         currentColorBoard[i + baseWidth] = currentColorBoard[i]
-        currentColorBoard[i] = ''
+        currentColorBoard[i] = blank
       }
     }
   }
@@ -94,8 +103,8 @@ export default function App() {
     const squareDraggedId = parseInt(squareDragged.getAttribute('data-id'))
     const squareReplacedId = parseInt(squareReplaced.getAttribute('data-id'))
 
-    currentColorBoard[squareReplacedId] = squareDragged.style.backgroundColor
-    currentColorBoard[squareDraggedId] = squareReplaced.style.backgroundColor
+    currentColorBoard[squareReplacedId] = squareDragged.getAttribute('src')
+    currentColorBoard[squareDraggedId] = squareReplaced.getAttribute('src')
 
     const validMoves = [squareDraggedId - 1, squareDraggedId - baseWidth, squareDraggedId + 1, squareDraggedId + baseWidth]
     const validMove = validMoves.includes(squareReplacedId)
@@ -109,8 +118,14 @@ export default function App() {
       setSquareDragged(null)
       setSquareReplaced(null)
     } else {
-      currentColorBoard[squareReplacedId] = squareReplaced.style.backgroundColor
-      currentColorBoard[squareDraggedId] = squareDragged.style.backgroundColor
+      currentColorBoard[squareReplacedId] = squareReplaced.getAttribute('src')
+      currentColorBoard[squareDraggedId] = squareDragged.getAttribute('src')
+      
+      squareDragged.style.animation = 'falseMoveAnimation 1s'
+      setTimeout(() => {
+        squareDragged.style.animation = 'none'
+      }, 2200)
+
       setCurrentColorBoard([...currentColorBoard])
     }
   }
@@ -146,8 +161,9 @@ export default function App() {
       <div className="game_container">
         {currentColorBoard.map((candyColor, index) => (
           <img 
-            style={{backgroundColor: candyColor}} 
-            alt={candyColor+'_fruit'} 
+            src={candyColor}
+            style={{animation: 'none'}}
+            alt={'fruit_' + index} 
             key={index} 
             data-id={index} 
             draggable={true}

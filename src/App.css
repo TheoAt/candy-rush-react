@@ -36,3 +36,18 @@ html {
     width: var(--game-img-size);
     height: var(--game-img-size);
 }
+
+@keyframes falseMoveAnimation {
+    0%{
+        transform: rotate(0);
+    }
+    30%{
+        transform: rotate(20deg);
+    }
+    60%{
+        transform: rotate(-20deg);
+    }
+    90%{
+        transform: rotate(0);
+    }
+}
