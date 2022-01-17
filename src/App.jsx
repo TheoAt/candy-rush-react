@@ -9,6 +9,7 @@ import purpleCandy from './images/purple-candy.png'
 import redCandy from './images/red-candy.png'
 import yellowCandy from './images/yellow-candy.png'
 import blank from './images/blank.png'
+import ScoreBoard from './components/ScoreBoard';
 
 const baseWidth = 8
 const candyColors = [blueCandy, greenCandy, orangeCandy, purpleCandy, redCandy, yellowCandy]
@@ -19,13 +20,18 @@ export default function App() {
   const [squareDragged, setSquareDragged] = useState(null)
   const [squareReplaced, setSquareReplaced] = useState(null)
 
+  const [nbMove, setNbMove] = useState(0)
+  const [scoreFinal, setScoreFinal] = useState(0)
+
   //CHECK CANDIES FUNCTIONS
   const checkColumnFour = () => {
     for(let i = 0; i <= 39; i++) {
       const columnFour = [i, i + baseWidth, i + baseWidth * 2, i + baseWidth * 3]
       const currentColorCase = currentColorBoard[i]
+      const isBlank = currentColorBoard[i] === blank
     
-      if(columnFour.every(square => currentColorBoard[square] === currentColorCase)) {
+      if(columnFour.every(square => currentColorBoard[square] === currentColorCase && !isBlank)) {
+        setScoreFinal((scoreFinal) => scoreFinal + 4)
         columnFour.forEach(square => currentColorBoard[square] = blank)
         return true
       }
@@ -37,10 +43,12 @@ export default function App() {
       const rowFour = [i, i + 1, i + 2, i + 3]
       const notValideCase = [5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55, 62, 63, 64]
       const currentColorCase = currentColorBoard[i]
+      const isBlank = currentColorBoard[i] === blank
 
       if(notValideCase.includes(i)) continue
 
-      if(rowFour.every(square => currentColorBoard[square] === currentColorCase)) {
+      if(rowFour.every(square => currentColorBoard[square] === currentColorCase && !isBlank)) {
+        setScoreFinal((scoreFinal) => scoreFinal + 4)
         rowFour.forEach(square => currentColorBoard[square] = blank)
         return true
       }
@@ -51,8 +59,10 @@ export default function App() {
     for(let i = 0; i <= 47; i++) {
       const columnThree = [i, i + baseWidth, i + baseWidth * 2]
       const currentColorCase = currentColorBoard[i]
+      const isBlank = currentColorBoard[i] === blank
     
-      if(columnThree.every(square => currentColorBoard[square] === currentColorCase)) {
+      if(columnThree.every(square => currentColorBoard[square] === currentColorCase && !isBlank)) {
+        setScoreFinal((scoreFinal) => scoreFinal + 3)
         columnThree.forEach(square => currentColorBoard[square] = blank)
         return true
       }
@@ -64,10 +74,12 @@ export default function App() {
       const rowThree = [i, i + 1, i + 2]
       const notValideCase = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 63, 64]
       const currentColorCase = currentColorBoard[i]
+      const isBlank = currentColorBoard[i] === blank
 
       if(notValideCase.includes(i)) continue
 
-      if(rowThree.every(square => currentColorBoard[square] === currentColorCase)) {
+      if(rowThree.every(square => currentColorBoard[square] === currentColorCase && !isBlank)) {
+        setScoreFinal((scoreFinal) => scoreFinal + 3)
         rowThree.forEach(square => currentColorBoard[square] = blank)
         return true
       }
@@ -128,6 +140,7 @@ export default function App() {
 
       setCurrentColorBoard([...currentColorBoard])
     }
+    setNbMove(nbMove + 1)
   }
 
   //CREATE BOARD GAME FUNCTION
@@ -176,6 +189,8 @@ export default function App() {
           />
         ))}
       </div>
+
+      <ScoreBoard score={scoreFinal}/>
     </div>
   );
 }
