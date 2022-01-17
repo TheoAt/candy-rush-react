@@ -22,32 +22,12 @@ html {
 
 .App {
     display: flex;
-    padding: var(--spacing-large);
-}
-
-.game_container {
-    width: var(--game-board-size);
-    height: var(--game-board-size);
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.game_container img {
-    width: var(--game-img-size);
-    height: var(--game-img-size);
-}
-
-@keyframes falseMoveAnimation {
-    0%{
-        transform: rotate(0);
-    }
-    30%{
-        transform: rotate(20deg);
-    }
-    60%{
-        transform: rotate(-20deg);
-    }
-    90%{
-        transform: rotate(0);
-    }
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('./images/bg_gameboard.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }

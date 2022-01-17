@@ -1,0 +1,36 @@
+.score_board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 64px 80px;
+    background-image: url('../images/bg_scores.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    -webkit-filter: drop-shadow(0px 0px 4px black);
+    filter: drop-shadow(0px 0px 4px black);
+}
+
+.score_board h1, h2, h3 {
+    -webkit-filter: drop-shadow(0px 0px 4px black);
+    filter: drop-shadow(0px 0px 4px black);
+}
+
+.score_board h1 {
+    margin-bottom: var(--spacing);
+    background-image: linear-gradient(to left, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.score_board h2, h3 {
+    color: rgb(255, 240, 221);
+}
+
+.score_board h3 {
+    margin-top: 4px;
+}
