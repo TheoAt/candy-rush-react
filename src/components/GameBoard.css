@@ -1,0 +1,47 @@
+.game_board {
+    min-height: min-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-image: url('../images/bg_gamecontainer.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: var(--spacing-large);
+    border: var(--spacing-medium) solid transparent;
+    border-image: url('https://t3.ftcdn.net/jpg/01/28/83/12/360_F_128831207_OltLTiML8diLx53rKDpb1wvY8VNabzcq.jpg') 16;
+    box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.3) inset;
+}
+
+.game_container {
+    width: var(--game-board-size);
+    height: var(--game-board-size);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.game_container img {
+    width: var(--game-img-size);
+    height: var(--game-img-size);
+    -webkit-filter: drop-shadow(4px 4px 8px black);
+    filter: drop-shadow(4px 4px 8px black);
+}
+
+@keyframes falseMoveAnimation {
+    0% {
+        transform: rotate(0);
+    }
+
+    30% {
+        transform: rotate(20deg);
+    }
+
+    60% {
+        transform: rotate(-20deg);
+    }
+
+    90% {
+        transform: rotate(0);
+    }
+}
