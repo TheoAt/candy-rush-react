@@ -19,6 +19,8 @@
     height: var(--game-board-size);
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .game_container img {
@@ -26,6 +28,7 @@
     height: var(--game-img-size);
     -webkit-filter: drop-shadow(4px 4px 8px black);
     filter: drop-shadow(4px 4px 8px black);
+    margin: 2px;
 }
 
 @keyframes falseMoveAnimation {

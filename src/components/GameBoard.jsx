@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ScoreBoard from './ScoreBoard';
 import './GameBoard.css';
 
 //IMPORT CANDIES IMAGES
@@ -21,7 +22,6 @@ export default function GameBoard() {
   const [squareReplaced, setSquareReplaced] = useState(null)
 
   const [currentScore, setScoreFinal] = useState(0)
-  localStorage.setItem('current_score', currentScore)
 
   //CHECK CANDIES FUNCTIONS
   const checkColumnFive = () => {
@@ -151,15 +151,8 @@ export default function GameBoard() {
 
     const validMoves = [squareDraggedId - 1, squareDraggedId - baseWidth, squareDraggedId + 1, squareDraggedId + baseWidth]
     const validMove = validMoves.includes(squareReplacedId)
-    
-    const isColumnFive = checkColumnFive()
-    const isRowFive = checkRowFive()
-    const isColumnFour = checkColumnFour()
-    const isRowFour = checkRowFour()
-    const isColumnThree = checkColumnThree()
-    const isRowThree = checkRowThree()
 
-    if(squareReplacedId && validMove && (isColumnFive || isRowFive || isColumnFour || isRowFour || isColumnThree || isRowThree)) {
+    if(squareReplacedId && validMove && (checkColumnFive() || checkRowFive() || checkColumnFour() || checkRowFour() || checkColumnThree() || checkRowThree())) {
       setSquareDragged(null)
       setSquareReplaced(null)
     } else {
@@ -200,8 +193,6 @@ export default function GameBoard() {
 
       moveDownSquare()
       setCurrentColorBoard([...currentColorBoard])
-
-      localStorage.setItem('current_score', currentScore)
       
       const bestScore = localStorage.getItem('best_score')
       bestScore <= currentScore ? localStorage.setItem('best_score', currentScore) : null
@@ -209,11 +200,16 @@ export default function GameBoard() {
     return () => clearInterval(timer)
   }, [checkColumnFive, checkRowFive, checkColumnFour, checkRowFour, checkColumnThree, checkRowThree, moveDownSquare, currentColorBoard])
 
+  const bestScoreAllTime = localStorage.getItem('best_score')
+
   return (
       <div className='game_board'>
+        <ScoreBoard bestScore={bestScoreAllTime < currentScore ? currentScore : bestScoreAllTime} currentScore={currentScore}/>
+
         <div className="game_container">
             {currentColorBoard.map((candyColor, index) => (
                 <img
+                    className='img_fruit'
                     src={candyColor}
                     style={{animation: 'none'}}
                     alt={'fruit_' + index}
