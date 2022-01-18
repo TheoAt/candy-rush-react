@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700&display=swap');
+
 :root {
     --main-color: #0e0b2b;
     --secondary-color: #b2a187;
@@ -7,7 +9,8 @@
     --spacing-medium: calc(var(--spacing) * 2);
     --spacing-large: calc(var(--spacing)* 4);
     --game-board-size: 560px;
-    --game-img-size: 70px;
+    --game-img-size: 64px;
+    --main-font: 'Passion One', cursive;
 }
 
 * {
@@ -30,4 +33,40 @@ html {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+
+/* ALL RESPONSIVE */
+@media screen and (max-width: 540px) {
+    :root {
+        --game-board-size: 280px;
+        --game-img-size: 32px;
+    }
+
+    .game_container img {
+        margin: 0;
+    }
+
+    .score_board {
+        padding: 24px 32px;
+    }
+
+    .score_board h1 {
+        font-size: 20px;
+        margin: 2px 0 4px 0;
+    }
+
+    .score_board h2, h3 {
+        font-size: 12px;
+    }
+
+    .score_board h3 {
+        margin: 0 0 2px 0;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    :root {
+        --game-board-size: 200px;
+        --game-img-size: 24px;
+    }
 }

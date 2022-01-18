@@ -1,19 +1,6 @@
-import { useEffect } from 'react/cjs/react.development';
-import { useState } from 'react';
 import './ScoreBoard.css'
 
-const ScoreBoard = () => {
-    const [currentScore, setCurrentScore] = useState();
-    const [bestScore, setBestScore] = useState();
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentScore(localStorage.getItem('current_score'))
-            setBestScore(localStorage.getItem('best_score'))
-        }, 200)
-        return () => clearInterval(timer)
-    }, [bestScore, currentScore])
-
+const ScoreBoard = ({bestScore, currentScore}) => {
     return (
         <div className='score_board'>
             <div className="title_container">
