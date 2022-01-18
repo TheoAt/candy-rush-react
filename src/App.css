@@ -46,6 +46,10 @@ html {
         margin: 0;
     }
 
+    .game_board {
+        padding: var(--spacing-medium);
+    }
+
     .score_board {
         padding: 24px 32px;
     }
